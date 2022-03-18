@@ -40,23 +40,18 @@ def transform_to_label_type(orig_img_path, orig_json_file, save_path):
     with open(orig_json_file, 'r') as f:
         orig_json = json.load(f, object_pairs_hook = OrderedDict)
 
-    #label_names = ["line", "pole", "sign", "diam", "single_arrow", "double_arrow", "sidewalk", "lane_a", "triangle", "stopline", "stopline_a"]
-    label_names = ["line", "pole", "sign", "diam", "single_arrow", \
-            "double_arrow", "sidewalk", "lane_a", "triangle", "stopline", \
-            "stopline_a", "triple_arrow", "stop_marker", "circle_marker", "white_lane", "white_long_lane"]
-
     marker_nums = len(orig_json)
     for i in range(marker_nums):
         marker = orig_json[i]
         #print(marker["file_obj"])
         img_file = marker["file_obj"].split('/')[-1]
         img_path = os.path.join(orig_img_path, img_file)
-        src = cv2.imread(img_path)
+        src = cv2.imread(img_path[:-3] + 'png')
         base64_data = base64.b64encode(cv2.imencode('.png', src)[1]).decode()
         img_name, _ = os.path.splitext(img_file)
-
+        print(str(i) + '/' + str(marker_nums))
         # no marker
-        if marker["label_count"] == 0:
+        if marker["label_count"] == 0 or marker['status'] != 'FINISHED':
             continue
         # the path to save each img json result
         json_path = os.path.join(save_path, img_name + '.json')
@@ -73,122 +68,29 @@ def transform_to_label_type(orig_img_path, orig_json_file, save_path):
                 result = marker["result"][i]
                 content = OrderedDict()
                 content["label"] = result["tagtype"]
-                if content["label"] not in label_names:
-                    print(content["label"], " not in label_names array")
-                    continue
+
                 content["line_color"] = ''
                 content["fill_color"] = ''
                 points = []
-                if content["label"] == "pole":
-                    pt = []
-                    p = result["data"].split('[')[1].split(']')[0]
-                    p1 = p.split(',')
-                    pt.append(float(p1[0]))
-                    pt.append(float(p1[1]))
-                    points.append(pt)
-                    pt = []
-                    bot_right_0 = float(p1[0]) + float(p1[2])
-                    bot_right_1 = float(p1[1]) + float(p1[3])
-                    pt.append(bot_right_0)
-                    pt.append(bot_right_1)
-                    points.append(pt)
-                elif content["label"] == "line" or content["label"] == "lane_a":
-                    p1 = result["data"].split(',')
-                    length = len(p1)
-                    pt_cnt = int(math.floor(length / 3))
-                    for i in range(pt_cnt):
-                        if p1[3 * i] == "[\"Z\"]":
-                            break
-                        pt = []
-                        pt.append(float(p1[3 * i + 1]))
-                        pt.append(float(p1[3 * i + 2].split(']')[0]))
-                        points.append(pt)
-                    points.append(pt)
-                elif content["label"] == "diam":
-                    p1 = result["data"].split(',')
-                    length = len(p1)
-                    pt_cnt = int(math.floor(length / 3))
-                    for i in range(pt_cnt):
-                        if p1[3 * i] == "[\"Z\"]":
-                            break
-                        pt = []
-                        pt.append(float(p1[3 * i + 1]))
-                        pt.append(float(p1[3 * i + 2].split(']')[0]))
-                        points.append(pt)
-                elif content["label"] == "triangle":
-                    p1 = result["data"].split(',')
-                    length = len(p1)
-                    pt_cnt = int(math.floor(length / 3))
-                    for i in range(pt_cnt):
-                        if p1[3 * i] == "[\"Z\"]":
-                            break
-                        pt = []
-                        pt.append(float(p1[3 * i + 1]))
-                        pt.append(float(p1[3 * i + 2].split(']')[0]))
-                        points.append(pt)
-                elif content["label"] == "sidewalk" \
-                        or content["label"] == "stopline" \
-                        or content["label"] == "stopline_a":
-                    p1 = result["data"].split(',')
-                    length = len(p1)
-                    pt_cnt = int(math.floor(length / 3))
-                    for i in range(pt_cnt):
-                        if p1[3 * i] == "[\"Z\"]":
-                            break
-                        pt = []
-                        pt.append(float(p1[3 * i + 1]))
-                        pt.append(float(p1[3 * i + 2].split(']')[0]))
-                        points.append(pt)
-                    points.append(pt)
-                elif content["label"] == "single_arrow" \
-                    or content["label"] == "double_arrow":
-                    p1 = result["data"].split(',')
-                    length = len(p1)
-                    pt_cnt = int(math.floor(length / 3))
-                    for i in range(pt_cnt):
-                        if p1[3 * i] == "[\"Z\"]":
-                            break
-                        pt = []
-                        pt.append(float(p1[3 * i + 1]))
-                        pt.append(float(p1[3 * i + 2].split(']')[0]))
-                        points.append(pt)
-                else:
-                    p1 = result["data"].split(',')
-                    length = len(p1)
-                    pt_cnt = int(math.floor(length / 3))
-                    for i in range(pt_cnt):
-                        if p1[3 * i] == "[\"Z\"]":
-                            break
-                        pt = []
-                        pt.append(float(p1[3 * i + 1]))
-                        pt.append(float(p1[3 * i + 2].split(']')[0]))
-                        points.append(pt)
-                    points.append(pt)
 
-                    
+                p1 = result["data"].split(',')
+                length = len(p1)
+                pt_cnt = int(math.floor(length / 3))
+                for i in range(pt_cnt):
+                    if p1[3 * i] == "[\"Z\"]":
+                        break
+                    pt = []
+                    pt.append(float(p1[3 * i + 1]))
+                    pt.append(float(p1[3 * i + 2].split(']')[0]))
+                    points.append(pt)
+                points.append(pt)
+
+                if len(points) < 3:
+                    continue
 
                 content["points"] = points
 
-                if content["label"] == "line":
-                    content["shape_type"] = "polygon"
-                elif content["label"] == "lane_a":
-                    content["shape_type"] = "polygon"
-                elif content["label"] == "pole":
-                    content["shape_type"] = "rectangle"
-                elif content["label"] == "sidewalk":
-                    content["shape_type"] = "polygon"
-                elif content["label"] == "single_arrow":
-                    content["shape_type"] = "polygon"
-                elif content["label"] == "double_arrow":
-                    content["shape_type"] = "polygon"
-                elif content["label"] == "sign":
-                    content["shape_type"] = "rectangle"
-                elif content["label"] == "diam":
-                    content["shape_type"] = "polygon"
-                elif content["label"] == "triangle":
-                    content["shape_type"] = "polygon"
-                else:
-                    content["shape_type"] = "polygon"
+                content["shape_type"] = "polygon"
 
                 content["flags"] = OrderedDict()
                 shapes.append(content)
@@ -208,8 +110,8 @@ def transform_to_label_type(orig_img_path, orig_json_file, save_path):
 orig_img_path = args.orig_img_path
 orig_json_file = args.orig_json_file
 save_path = args.save_path
-orig_img_path = '/data/bev_lidar_semtmap'
-orig_json_file = 'batch_39--semantic.bev_lidar_semtmap_20220311.json'
-save_path = 'labelme'
+orig_img_path = '/media/uisee/Zexi/liangxiang_need_label_new'
+orig_json_file = '/media/uisee/Zexi/labeled_data/rgb/liangxiang/batch_22--semantic.map.rgb_20220116_lx.sz.cargo.json'
+save_path = '/media/uisee/Zexi/labeled_data/rgb/liangxiang/json'
 transform_to_label_type(orig_img_path, orig_json_file, save_path)
 

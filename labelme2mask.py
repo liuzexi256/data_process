@@ -26,8 +26,8 @@ def main():
             json_file = json_dir + list_path[i]         # 这是我的路径，替换成自己的就好
             print(list_path[i])
             if args.out is None:
-                out_dir = osp.basename(json_file).replace('.', '_')  # 返回文件名
-                out_dir = osp.join(osp.dirname(json_file), out_dir)  # 把目录和文件名合成一个路径
+                out_name = osp.basename(json_file).replace('.', '_')  # 返回文件名
+                out_dir = osp.join(osp.dirname(labelme_dir), out_name)  # 把目录和文件名合成一个路径
             else:
                 out_dir = args.out
             if not osp.exists(out_dir):
@@ -86,5 +86,6 @@ if __name__ == '__main__':
                 'triangle_sign':8, 'diam':9, 'sidewalk':10, 'single_arrow':11, 'double_arrow':12, 'triple_arrow':13, 'triangle':14, 'stopline':15, \
                 'dashed_stopline':16, 'yellow_decel_line':17, 'white_decel_line':18, 'guide_line':19, 'stop_marker':20, 'circle_marker':21, \
                 'traffic_light':22, 'light_sign':23, 'direction_sign':24, 'fire_window':25, 'tunnel_groove':26, 'curb':27, 'tunnel_light':28}
-    json_dir = '/home/uisee/Desktop/data_process/labelme/'
+    json_dir = '/media/uisee/Zexi/labeled_data/rgb/liangxiang/json/'
+    labelme_dir = '/media/uisee/Zexi/labeled_data/rgb/liangxiang/labelme/'
     main()

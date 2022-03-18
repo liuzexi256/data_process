@@ -4,10 +4,10 @@ import sys
 import shutil
 from PIL import Image
 
-path = '/data/niguang/all_2'
-newpath = '/data/niguang/jiashan_need_label_light'
-img_type = '.jpg'
-frame_gap = 5
+path = '/media/uisee/Zexi/Video/5/video5-12350'
+newpath = '/media/uisee/Zexi/Video/dongfeng_need_label_1'
+img_type = '.png'
+frame_gap = 90
 start_frame = 0
 end_frame = 10000000
 

@@ -1,20 +1,21 @@
 import os
-from libtiff import TIFF
-import imageio
+import cv2
 
-def tiff_to_jpg(src, dst):
-            files = os.listdir(src)
+def tiff_to_jpg(input_dir, output_dir, format):
+            files = os.listdir(input_dir)
             i = 1
             for f in files:
-                tif = TIFF.open(os.path.join(src, f), mode = 'r')
-                for im in list(tif.iter_images()):
-                    file_name, file_extend = os.path.splitext(f)
-                    new_path = os.path.join(dst, file_name + '.jpg')
-                    imageio.imsave(new_path, im)
-                    print('{}/{}'.format(i, len(files)))
-                    i += 1
-                    print('successfully saved!!!')
+                file_name, file_extend = os.path.splitext(f)
+                output_name = os.path.join(output_dir, file_name + format)
+                if file_extend != '.tiff':
+                    continue
+                img = cv2.imread(os.path.join(input_dir, f))
 
-src = "doudian_need_label"
-dst = "doudian_need_label_jpg"
-tiff_to_jpg(src, dst)
+                cv2.imwrite(output_name, img)
+                print('{}/{}'.format(i, len(files)))
+                i += 1
+
+input_dir = "/data/20210701/dump_images/image_capturer_7"
+output_dir = "/media/uisee/Zexi/L1/L1_rgb"
+format = '.png'
+tiff_to_jpg(input_dir, output_dir, format)
