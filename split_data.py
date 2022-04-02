@@ -11,8 +11,8 @@ import random
 
 trainval_percent = 1 #确定用于训练的数据占比
 train_percent = 0.8 #确定在用于训练的数据中，训练集的占比
-xmlfilepath = '/media/uisee/Zexi/all_train_data/training/anno' #将被划分的xml文件
-txtsavepath = '/media/uisee/Zexi/all_train_data' #划分后 得到的txt保存的地方
+xmlfilepath = '/media/uisee/Zexi/train_data/gray/all_train_data_compress/training/anno_extract' #将被划分的xml文件
+txtsavepath = '/media/uisee/Zexi/train_data/gray/all_train_data_compress' #划分后 得到的txt保存的地方
 
 #固定随机数的生成
 random.seed(2022)

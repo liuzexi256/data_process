@@ -1,7 +1,7 @@
 import os
 import cv2
 
-def tiff_to_jpg(input_dir, output_dir, format):
+def tiff2png(input_dir, output_dir, format):
             files = os.listdir(input_dir)
             i = 1
             for f in files:
@@ -15,7 +15,7 @@ def tiff_to_jpg(input_dir, output_dir, format):
                 print('{}/{}'.format(i, len(files)))
                 i += 1
 
-input_dir = "/data/20210701/dump_images/image_capturer_7"
-output_dir = "/media/uisee/Zexi/L1/L1_rgb"
+input_dir = '/media/uisee/Zexi/L1_new/dump_images/image_capturer_7'
+output_dir = '/media/uisee/Zexi/L1_new/imgs'
 format = '.png'
-tiff_to_jpg(input_dir, output_dir, format)
+tiff2png(input_dir, output_dir, format)
