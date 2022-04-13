@@ -43,7 +43,7 @@ def transform_to_label_type(orig_img_path, orig_json_file, save_path):
     marker_nums = len(orig_json)
     for i in range(marker_nums):
         marker = orig_json[i]
-        #print(marker["file_obj"])
+
         img_file = marker["file_obj"].split('/')[-1]
         img_path = os.path.join(orig_img_path, img_file)
         src = cv2.imread(img_path[:-3] + 'png')
@@ -110,8 +110,8 @@ def transform_to_label_type(orig_img_path, orig_json_file, save_path):
 orig_img_path = args.orig_img_path
 orig_json_file = args.orig_json_file
 save_path = args.save_path
-orig_img_path = '/media/uisee/Zexi/liangxiang_need_label_new'
-orig_json_file = '/media/uisee/Zexi/labeled_data/rgb/liangxiang/batch_22--semantic.map.rgb_20220116_lx.sz.cargo.json'
-save_path = '/media/uisee/Zexi/labeled_data/rgb/liangxiang/json'
+orig_img_path = '/media/uisee/Zexi/labeled_data/gray/sp/images'
+orig_json_file = '/media/uisee/Zexi/labeled_data/gray/sp/batch_57--semantic.sp_need_label_20220407.json'
+save_path = '/media/uisee/Zexi/labeled_data/gray/sp/json'
 transform_to_label_type(orig_img_path, orig_json_file, save_path)
 

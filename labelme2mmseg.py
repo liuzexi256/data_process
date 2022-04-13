@@ -1,11 +1,23 @@
+'''
+Author: Zexi Liu
+Date: 2022-01-13 17:53:46
+LastEditors: Zexi Liu
+LastEditTime: 2022-04-11 14:35:06
+FilePath: /data_process/labelme2mmseg.py
+Description: 
+
+Copyright (c) 2022 by Uisee, All Rights Reserved. 
+'''
+
 import os
 import shutil
 
-origin_dirs = "/media/uisee/Zexi/labeled_data/rgb/liangxiang/labelme/"
+main_dir = '/media/uisee/Zexi/labeled_data/gray/sp'
+origin_dirs = os.path.join(main_dir, 'labelme')
 
-img_folder = "/media/uisee/Zexi/labeled_data/rgb/liangxiang/imgs/"
-label_folder = "/media/uisee/Zexi/labeled_data/rgb/liangxiang/label/"
-label_viz_folder = "/media/uisee/Zexi/labeled_data/rgb/liangxiang/label_viz/"
+img_folder = os.path.join(main_dir, 'imgs')
+label_folder = os.path.join(main_dir, 'label')
+label_viz_folder = os.path.join(main_dir, 'label_viz')
 
 if not os.path.exists(img_folder):
     os.makedirs(img_folder)
@@ -19,6 +31,14 @@ if not os.path.exists(label_viz_folder):
 FileNameList = os.listdir(origin_dirs)
 for i in range(len(FileNameList)):
     name = FileNameList[i][:-5]
-    shutil.copy(origin_dirs + FileNameList[i] + '/img.png', img_folder + name + '.png')
-    shutil.copy(origin_dirs + FileNameList[i] + '/label.png', label_folder + name + '.png')
-    shutil.copy(origin_dirs + FileNameList[i] + '/label_viz.png', label_viz_folder + name + '.png')
+    temp_img_dir = os.path.join(origin_dirs, FileNameList[i], 'img.png')
+    temp_label_dir = os.path.join(origin_dirs, FileNameList[i], 'label.png')
+    temp_label_viz_dir = os.path.join(origin_dirs, FileNameList[i], 'label_viz.png')
+    
+    temp_img_save_dir = os.path.join(img_folder, name + '.png')
+    temp_label_save_dir = os.path.join(label_folder, name + '.png')
+    temp_label_viz_save_dir = os.path.join(label_viz_folder, name + '.png')
+    
+    shutil.copy(temp_img_dir, temp_img_save_dir)
+    shutil.copy(temp_label_dir, temp_label_save_dir)
+    shutil.copy(temp_label_viz_dir, temp_label_viz_save_dir)

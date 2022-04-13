@@ -1,3 +1,13 @@
+'''
+Author: Zexi Liu
+Date: 2021-07-22 16:45:40
+LastEditors: Zexi Liu
+LastEditTime: 2022-04-08 09:54:20
+FilePath: /data_process/image_cut.py
+Description: 
+
+Copyright (c) 2022 by Uisee, All Rights Reserved. 
+'''
 import os
 from PIL import Image
 import numpy as np

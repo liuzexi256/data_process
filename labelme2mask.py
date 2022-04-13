@@ -1,3 +1,13 @@
+'''
+Author: Zexi Liu
+Date: 2022-01-14 17:34:50
+LastEditors: Zexi Liu
+LastEditTime: 2022-04-13 11:18:23
+FilePath: /data_process/labelme2mask.py
+Description: 
+
+Copyright (c) 2022 by Uisee, All Rights Reserved. 
+'''
 import yaml
 import argparse
 import base64
@@ -86,6 +96,6 @@ if __name__ == '__main__':
                 'triangle_sign':8, 'diam':9, 'sidewalk':10, 'single_arrow':11, 'double_arrow':12, 'triple_arrow':13, 'triangle':14, 'stopline':15, \
                 'dashed_stopline':16, 'yellow_decel_line':17, 'white_decel_line':18, 'guide_line':19, 'stop_marker':20, 'circle_marker':21, \
                 'traffic_light':22, 'light_sign':23, 'direction_sign':24, 'fire_window':25, 'tunnel_groove':26, 'curb':27, 'tunnel_light':28}
-    json_dir = '/media/uisee/Zexi/labeled_data/rgb/liangxiang/json/'
-    labelme_dir = '/media/uisee/Zexi/labeled_data/rgb/liangxiang/labelme/'
+    json_dir = '/media/uisee/Zexi/labeled_data/gray/sp/json/'
+    labelme_dir = '/media/uisee/Zexi/labeled_data/gray/sp/labelme/'
     main()
