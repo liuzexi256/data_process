@@ -2,7 +2,7 @@
 Author: Zexi Liu
 Date: 2022-04-02 11:35:32
 LastEditors: Zexi Liu
-LastEditTime: 2022-04-02 15:52:00
+LastEditTime: 2022-04-14 18:16:46
 Description: decompress and rename imgs from imgs_compress.mp4 and timestamp.txt
 
 Copyright (c) 2022 by Uisee, All Rights Reserved. 
@@ -39,11 +39,12 @@ def resume(input_dir, parent_dir, format):
 
 input_dir = args.input_dir
 parent_dir = os.path.abspath(os.path.join(input_dir, os.pardir))
-rename_dir = os.path.join(parent_dir, 'decompress_imgs')
+decompress_dir = os.path.join(parent_dir, 'decompress_imgs')
 format = '.png'
 
-if not os.path.exists(rename_dir):
-    os.makedirs(rename_dir)
+if not os.path.exists(decompress_dir):
+    os.makedirs(decompress_dir)
 
-subprocess.run(['ffmpeg', '-i', input_dir, rename_dir + '/%06d.png'])
-resume(rename_dir, parent_dir, format)
+subprocess.run(['ffmpeg', '-i', input_dir, decompress_dir + '/%06d' + format])
+resume(decompress_dir, parent_dir, format)
+subprocess.run(['rm', '-rf', decompress_dir])

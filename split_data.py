@@ -1,18 +1,20 @@
-#读取文件夹下的文件并将其文件名（无后缀）分成4份保存在保存在一个txt文件中
-#作者：阿玉
-#时间：2020.5.12
-#说明：文件分为训练集、验证集和测试集，tranval为训练集和验证机的合集。
-#为了划分数据集写的
-#可修改参数：将被划分的文件夹路径，存储txt文件的路径及4个文件的名字，固定随机数的seed，
-#训练集和验证集的占比，共8个参数
+'''
+Author: Zexi Liu
+Date: 2022-01-19 14:47:39
+LastEditors: Zexi Liu
+LastEditTime: 2022-04-14 10:39:10
+FilePath: /data_process/split_data.py
+Description: 
 
+Copyright (c) 2022 by Uisee, All Rights Reserved. 
+'''
 import os
 import random
 
 trainval_percent = 1 #确定用于训练的数据占比
 train_percent = 0.8 #确定在用于训练的数据中，训练集的占比
-xmlfilepath = '/media/uisee/Zexi/train_data/gray/all_train_data_compress/training/anno_extract' #将被划分的xml文件
-txtsavepath = '/media/uisee/Zexi/train_data/gray/all_train_data_compress' #划分后 得到的txt保存的地方
+xmlfilepath = '/media/uisee/Zexi/train_data/rgb/all_train_data/train/anno' #将被划分的xml文件
+txtsavepath = '/media/uisee/Zexi/train_data/rgb/all_train_data' #划分后 得到的txt保存的地方
 
 #固定随机数的生成
 random.seed(2022)
