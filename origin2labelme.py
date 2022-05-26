@@ -1,11 +1,13 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Oct 30 19:45:11 2021
+'''
+Author: Zexi Liu
+Date: 2022-05-25 14:52:43
+LastEditors: Zexi Liu
+LastEditTime: 2022-05-26 22:20:38
+FilePath: /data_process/origin2labelme.py
+Description: 
 
-@author: yxh
-"""
-
+Copyright (c) 2022 by Uisee, All Rights Reserved. 
+'''
 import numpy as np
 import os
 from collections import OrderedDict
@@ -103,9 +105,6 @@ def transform_to_label_type(orig_img_path, orig_json_file, save_path):
             content_ext["imageWidth"] = 1280
             #print(content_ext)
             json.dump(content_ext, json_file, sort_keys = False, indent = 4, cls=MyEncoder)
-        
-
-
 
 orig_img_path = args.orig_img_path
 orig_json_file = args.orig_json_file

@@ -2,7 +2,7 @@
 Author: Zexi Liu
 Date: 2021-07-22 16:45:40
 LastEditors: Zexi Liu
-LastEditTime: 2022-04-08 09:56:13
+LastEditTime: 2022-05-26 22:13:04
 FilePath: /data_process/tiff2png.py
 Description: 
 
@@ -25,9 +25,11 @@ def tiff2png(input_dir, output_dir, format):
                 print('{}/{}'.format(i, len(files)))
                 i += 1
 
-input_dir = '/media/uisee/Zexi/doudian_need_label'
-output_dir = '/media/uisee/Zexi/doudian_need_label_png'
+input_dir = '/home/zexi/Downloads/image_capturer_7'
+output_dir = 'L1'
+format = '.png'
+
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
-format = '.png'
+
 tiff2png(input_dir, output_dir, format)
