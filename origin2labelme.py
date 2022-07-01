@@ -1,29 +1,19 @@
-'''
-Author: Zexi Liu
-Date: 2022-05-25 14:52:43
-LastEditors: Zexi Liu
-LastEditTime: 2022-05-26 22:20:38
-FilePath: /data_process/origin2labelme.py
-Description: 
-
-Copyright (c) 2022 by Uisee, All Rights Reserved. 
-'''
-import numpy as np
 import os
-from collections import OrderedDict
 import json
 import math
 import argparse
 import base64
-import cv2
 
+import numpy as np
+from collections import OrderedDict
+import cv2
+from tqdm import tqdm
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--orig_img_path', nargs='?', default='./', help='the path of orig img path')
 parser.add_argument('--orig_json_file', nargs='?', default='./*.json', help='the marker json on new label tools online')
-parser.add_argument('--save_path', nargs='?', default='./labelme_marker', help='the path to save labelme type marker result')
+#parser.add_argument('--save_path', nargs='?', default='./labelme_marker', help='the path to save labelme type marker result')
 args = parser.parse_args()
-
 
 class MyEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -37,13 +27,11 @@ class MyEncoder(json.JSONEncoder):
             return super(MyEncoder, self).default(obj)
 
 def transform_to_label_type(orig_img_path, orig_json_file, save_path):
-    if not os.path.exists(save_path):
-        os.makedirs(save_path)
     with open(orig_json_file, 'r') as f:
         orig_json = json.load(f, object_pairs_hook = OrderedDict)
 
     marker_nums = len(orig_json)
-    for i in range(marker_nums):
+    for i in tqdm(range(marker_nums)):
         marker = orig_json[i]
 
         img_file = marker["file_obj"].split('/')[-1]
@@ -51,7 +39,7 @@ def transform_to_label_type(orig_img_path, orig_json_file, save_path):
         src = cv2.imread(img_path[:-3] + 'png')
         base64_data = base64.b64encode(cv2.imencode('.png', src)[1]).decode()
         img_name, _ = os.path.splitext(img_file)
-        print(str(i) + '/' + str(marker_nums))
+        #print(str(i) + '/' + str(marker_nums))
         # no marker
         if marker["label_count"] == 0 or marker['status'] != 'FINISHED':
             continue
@@ -106,11 +94,15 @@ def transform_to_label_type(orig_img_path, orig_json_file, save_path):
             #print(content_ext)
             json.dump(content_ext, json_file, sort_keys = False, indent = 4, cls=MyEncoder)
 
-orig_img_path = args.orig_img_path
-orig_json_file = args.orig_json_file
-save_path = args.save_path
-orig_img_path = '/media/uisee/Zexi/labeled_data/gray/sp/images'
-orig_json_file = '/media/uisee/Zexi/labeled_data/gray/sp/batch_57--semantic.sp_need_label_20220407.json'
-save_path = '/media/uisee/Zexi/labeled_data/gray/sp/json'
-transform_to_label_type(orig_img_path, orig_json_file, save_path)
+if __name__ == '__main__':
+    orig_img_path = args.orig_img_path
+    orig_json_file = args.orig_json_file
+    #save_path = args.save_path
 
+    json_save_path = os.path.join(os.path.dirname(os.path.abspath(orig_img_path)), 'json')
+    if not os.path.exists(json_save_path):
+        os.makedirs(json_save_path)
+    #orig_img_path = '/media/zexi/Zexi/labeled_data/lx_sz_cargo_need_label_new'
+    #orig_json_file = '/media/zexi/Zexi/labeled_data/batch_22--semantic.map.rgb_20220116_lx.sz.cargo.json'
+    #save_path = '/media/zexi/Zexi/labeled_data/lx/json'
+    transform_to_label_type(orig_img_path, orig_json_file, json_save_path)

@@ -2,7 +2,7 @@
 Author: Zexi Liu
 Date: 2022-01-14 17:34:50
 LastEditors: Zexi Liu
-LastEditTime: 2022-04-13 11:18:23
+LastEditTime: 2022-06-28 11:54:29
 FilePath: /data_process/labelme2mask.py
 Description: 
 
@@ -16,7 +16,6 @@ import os
 import os.path as osp
 
 import PIL.Image
-
 from labelme.logger import logger
 from labelme import utils
 from math import *
@@ -24,10 +23,6 @@ from math import *
 def main():
     list_path = os.listdir(json_dir)      # 这是我的路径，替换成自己的就好
     for i in range(0, len(list_path)):
-            #logger.warning('This script is aimed to demonstrate how to convert the'
-            #               'JSON file to a single image dataset, and not to handle'
-            #               'multiple JSON files to generate a real-use dataset.')
-
             parser = argparse.ArgumentParser()
             parser.add_argument('--json_file')
             parser.add_argument('-o', '--out', default=None)
@@ -86,7 +81,6 @@ def main():
             print(str(i) + '/' + str(len(list_path)))
 
             logger.info('Saved to: {}'.format(out_dir))
-            x = out_dir+'\\label.png'
 
 if __name__ == '__main__':
     #label_name_to_value = {'_background_': 0, 'line': 1, 'pole': 2, 'sign': 3, 'diam': 4, 'single_arrow': 5, 'double_arrow': 6, \
@@ -96,6 +90,10 @@ if __name__ == '__main__':
                 'triangle_sign':8, 'diam':9, 'sidewalk':10, 'single_arrow':11, 'double_arrow':12, 'triple_arrow':13, 'triangle':14, 'stopline':15, \
                 'dashed_stopline':16, 'yellow_decel_line':17, 'white_decel_line':18, 'guide_line':19, 'stop_marker':20, 'circle_marker':21, \
                 'traffic_light':22, 'light_sign':23, 'direction_sign':24, 'fire_window':25, 'tunnel_groove':26, 'curb':27, 'tunnel_light':28}
-    json_dir = '/media/uisee/Zexi/labeled_data/gray/sp/json/'
-    labelme_dir = '/media/uisee/Zexi/labeled_data/gray/sp/labelme/'
+    json_dir = '/media/zexi/Zexi/labeled_data/lx/json/'
+    labelme_dir = '/media/zexi/Zexi/labeled_data/lx/labelme/'
+    
+    if not os.path.exists(labelme_dir):
+        os.makedirs(labelme_dir)
+
     main()

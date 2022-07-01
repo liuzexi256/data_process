@@ -2,7 +2,7 @@
 Author: Zexi Liu
 Date: 2021-07-22 16:45:40
 LastEditors: Zexi Liu
-LastEditTime: 2022-05-25 15:52:01
+LastEditTime: 2022-06-02 15:34:28
 FilePath: /data_process/tiff2gray.py
 Description: 
 
@@ -15,8 +15,11 @@ import sys
 import shutil
 from PIL import Image
 
-path = '/home/zexi/Downloads/image_capturer_7'
-newpath = 'L1'
+path = '/media/zexi/Zexi/20210701/dump_images/image_capturer_7'
+newpath = '/media/zexi/Zexi/20210701/gray'
+
+if not os.path.exists(newpath):
+    os.makedirs(newpath)
 
 def turnto8(path):
         files = os.listdir(path)

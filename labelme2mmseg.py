@@ -2,7 +2,7 @@
 Author: Zexi Liu
 Date: 2022-01-13 17:53:46
 LastEditors: Zexi Liu
-LastEditTime: 2022-04-11 14:35:06
+LastEditTime: 2022-06-02 11:36:50
 FilePath: /data_process/labelme2mmseg.py
 Description: 
 
@@ -12,7 +12,7 @@ Copyright (c) 2022 by Uisee, All Rights Reserved.
 import os
 import shutil
 
-main_dir = '/media/uisee/Zexi/labeled_data/gray/sp'
+main_dir = '/media/zexi/Zexi/labeled_data/lx'
 origin_dirs = os.path.join(main_dir, 'labelme')
 
 img_folder = os.path.join(main_dir, 'imgs')
