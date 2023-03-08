@@ -2,17 +2,16 @@
 Author: Zexi Liu
 Date: 2022-03-31 10:46:46
 LastEditors: Zexi Liu
-LastEditTime: 2022-04-14 18:16:57
+LastEditTime: 2022-12-23 11:43:01
 Description: rename and compress png images to mp4 video
 
-Copyright (c) 2022 by Uisee, All Rights Reserved. 
+Copyright (c) 2022 by Uisee, All Rights Reserved.
 '''
 
 import os
 import shutil
 import subprocess
 import argparse
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument('input_dir', help='input images dir path')
